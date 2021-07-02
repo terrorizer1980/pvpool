@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+* Volumes allocated using a CSI source will now have the appropriate `readOnly` field propagated to the attacher.
+
 ## [0.3.0] - 2021-03-22
 
 ### Changed

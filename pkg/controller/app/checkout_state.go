@@ -273,5 +273,13 @@ func ConfigureCheckoutState(cs *CheckoutState) (*CheckoutState, error) {
 		},
 	}
 
+	// In most volume sources, setting the readOnly field just forces mounts to
+	// also have the readOnly flag set. However, for CSI, it also changes the
+	// behavior of the external attacher so that it requests the correct mode
+	// from the CSI driver.
+	if spec := &cs.PersistentVolume.Object.Spec; spec.CSI != nil && len(spec.AccessModes) == 1 && spec.AccessModes[0] == corev1.ReadOnlyMany {
+		spec.CSI.ReadOnly = true
+	}
+
 	return cs, nil
 }
